@@ -1,0 +1,46 @@
+{
+  "name": "channel_panel",
+  "version": "1.0.0",
+  "description": "admin panel for all channel local system",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "serve": "node app.js",
+    "build": "pkg --target latest app.js"
+  },
+  "keywords": [
+    "channel_panel",
+    "dashboard"
+  ],
+  "author": "Md Naseem",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "0.27.2",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^5.0.0",
+    "cors": "^2.8.5",
+    "cron": "^3.1.7",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "joi": "^17.12.2",
+    "moment": "^2.30.1",
+    "mongoose": "^8.2.3",
+    "multer": "^1.4.5-lts.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.6.5",
+    "path": "^0.12.7",
+    "sequelize": "^6.35.2",
+    "socket.io": "^4.7.5",
+    "systeminformation": "^5.22.11",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "pkg": "^5.8.0"
+  }
+}

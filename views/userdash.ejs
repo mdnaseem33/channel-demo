@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article and Chapter View</title>
+     <!-- BEGIN: Vendor CSS-->
+     <base href="<%= req.protocol + '://' + req.get('host') %>" />
+     <link rel="stylesheet" type="text/css" href="app-assets/vendors/css/vendors.min.css" />
+     <link rel="stylesheet" type="text/css" href="app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css">
+     <link rel="stylesheet" type="text/css" href="app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css">
+     <link rel="stylesheet" type="text/css" href="app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css">
+     <link rel="stylesheet" type="text/css" href="app-assets/vendors/css/charts/apexcharts.css" />
+     <link rel="stylesheet" type="text/css" href="app-assets/vendors/css/extensions/toastr.min.css" />
+     <!-- END: Vendor CSS-->
+ 
+     <!-- BEGIN: Theme CSS-->
+     <link rel="stylesheet" type="text/css" href="app-assets/css/bootstrap.css" />
+     <link rel="stylesheet" type="text/css" href="app-assets/css/bootstrap-extended.css" />
+     <link rel="stylesheet" type="text/css" href="app-assets/css/colors.css" />
+     <link rel="stylesheet" type="text/css" href="app-assets/css/components.css" />
+     <link rel="stylesheet" type="text/css" href="app-assets/css/themes/dark-layout.css" />
+     <link rel="stylesheet" type="text/css" href="app-assets/css/themes/bordered-layout.css" />
+ 
+     <!-- BEGIN: Page CSS-->
+     <link rel="stylesheet" type="text/css" href="app-assets/css/core/menu/menu-types/vertical-menu.css" />
+     <link rel="stylesheet" type="text/css" href="app-assets/css/pages/dashboard-ecommerce.css" />
+     <link rel="stylesheet" type="text/css" href="app-assets/css/plugins/charts/chart-apex.css" />
+     <link rel="stylesheet" type="text/css" href="app-assets/css/plugins/extensions/ext-component-toastr.css" />
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+        }
+        .container-fluid {
+            display: flex;
+            height: 100vh;
+        }
+        #article-section {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        #chapter-section {
+            width: 250px;
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: #f8f9fa;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+            z-index: 1000;
+        }
+        #chapter-section .btn {
+            margin-bottom: 10px;
+        }
+        .full-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            z-index: 1050;
+            overflow: auto;
+            display: none;
+            padding: 20px;
+        }
+        .full-screen.show {
+            display: block;
+        }
+    </style>
+</head>
+<body id="html-body">
+    <div class="container-fluid">
+        <div id="article-section">
+            <div class="row">
+                <div class="col-12">
+                    <div style="margin-right: 250px;" class="card">
+                        <div class="card-header">
+                                <h1 class="card-title"> Channel <%= data.channel.name %> </h1>
+                        </div>
+                        <div class="card-body">
+                            <div class="ql-editor">
+                                <%- data.channel.description %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="chapter-section">
+            <div>
+                <h1 style="font-size: 250px; text-align: center;" ><%= data.channel.name %> </h1>
+                <ul class="list-group">
+                    <li id="countdown" style="display: inline-block !important; text-align: center; font-size: x-large;" class="list-group-item d-flex">
+                        10:00
+                    </li>
+                </ul>
+            </div>
+            <div style="display: inline-flex;" id="logout"> 
+                <form id="logout-form" style="width: 200px;" action="/logout" method="post">
+                    <button style="width:200px;" class="btn btn-danger">Logout</button>                     
+                </form>
+                <button id="full-screen-btn" style="width: 50px;" class="btn btn-icon btn-icon rounded-circle btn-flat-success waves-effect"> <i data-feather='maximize'></i> </button>  
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- BEGIN: Vendor JS-->
+    <script src="app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+     <!-- BEGIN: Page Vendor JS-->
+     <script src="../app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
+     <script src="../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
+     <script src="../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
+     <script src="../app-assets/vendors/js/tables/datatable/responsive.bootstrap4.js"></script>
+     <script src="../app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
+     <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="app-assets/js/core/app-menu.js"></script>
+    <script src="app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+ <!-- END: Theme JS-->
+ <script src="app-assets/js/core/vue.js"></script>
+ <script src="app-assets/js/core/axios.js"></script>
+    <% script.forEach(function(s){ %>
+        <script src="<%= s %>"></script>
+      <% }); %>
+
+    <!-- END: Page JS-->
+
+    <script>
+        $(window).on("load", function () {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14,
+                });
+            }
+
+            
+        });
+        
+    </script>
+    <script>
+        function goFullScreen() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) { 
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { 
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { 
+                document.documentElement.msRequestFullscreen();
+            }
+        }
+
+        $().ready(function(){
+            $('#full-screen-btn').click(goFullScreen);
+            let inactivityTime = 1000; 
+            let countdownInterval;
+            let timeout;
+    
+            function resetTimer() {
+                clearTimeout(timeout);
+                clearInterval(countdownInterval);
+                document.getElementById('countdown').style.display = 'none';
+    
+                timeout = setTimeout(showCountdown, inactivityTime);
+            }
+    
+            function showCountdown() {
+                let countdownElement = document.getElementById('countdown');
+                let timeRemaining = 600; 
+    
+                countdownElement.style.display = 'block';
+    
+                countdownInterval = setInterval(() => {
+                    countdownElement.textContent = `${parseInt(timeRemaining/60)}:${timeRemaining%60}`;
+                    timeRemaining -= 1;
+    
+                    if (timeRemaining < 0) {
+                        clearInterval(countdownInterval);
+                        $("#logout-form").submit();
+                    }
+                }, 1000);
+            }
+    
+            document.addEventListener('mousemove', resetTimer);
+            document.addEventListener('click', resetTimer);
+            document.addEventListener('keydown', resetTimer);
+    
+            resetTimer();
+        });
+    </script>
+</body>
+</html>

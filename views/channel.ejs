@@ -1,0 +1,35 @@
+<div class="content-header row">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+            <div class="col-12">
+                <h2 class="content-header-title float-left mb-0">Channels</h2>
+            </div>
+        </div>
+    </div>
+    <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+        <div class="form-group breadcrumb-right">
+            <div class="dropdown">
+                <a href="/channel-create" class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-float waves-light">
+                    Create
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <% for(const channel of data.channels){ %>
+        <a href="channel/<%= channel._id %>" class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"> Channel <%= channel.name %> </h4>
+                </div>
+                <div class="card-body">
+                    
+                </div>
+            </div>
+        </a>
+        
+    <% } %>
+   
+</div>
